@@ -1,35 +1,29 @@
 import React, { useState } from 'react';
-import { extractPlaylistId } from '../utils/youtubeUtils';
+// import { extractPlaylistId } from '../utils/youtubeUtils';
 
 interface PlaylistInputProps {
-  onSubmit: (playlistId: string) => void;
-  darkMode: boolean;
-}
+    onSubmit: (playlistUrl: string) => void;
+    darkMode: boolean;
+  }
 
 const PlaylistInput: React.FC<PlaylistInputProps> = ({ onSubmit, darkMode }) => {
-  const [playlistUrl, setPlaylistUrl] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
-  
-  const handleSubmit = (e: React.FormEvent) => {
+const [playlistUrl, setPlaylistUrl] = useState<string>('');
+const [error, setError] = useState<string | null>(null);
+
+const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+    console.log("Submitting Playlist:", playlistUrl); // DEBUGGING
     // Reset any previous errors
     setError(null);
     
     if (!playlistUrl.trim()) {
-      setError('Please enter a YouTube playlist URL');
-      return;
+    setError('Please enter a YouTube playlist URL');
+    return;
     }
     
-    const playlistId = extractPlaylistId(playlistUrl);
-    
-    if (!playlistId) {
-      setError('Invalid YouTube playlist URL. Please ensure the URL contains a playlist ID.');
-      return;
-    }
-    
-    onSubmit(playlistId);
-  };
+    // Pass the full URL to onSubmit - the API client will handle extraction
+    onSubmit(playlistUrl);
+};
   
   return (
     <div style={{
