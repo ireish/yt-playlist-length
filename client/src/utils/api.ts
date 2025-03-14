@@ -14,19 +14,21 @@ const apiClient = axios.create({
 // API functions
 export const getPlaylistInfo = async (playlistInput: string) => {
   try {
+    let response;
+    
     // Check if this is a full URL or just a playlist ID
     if (playlistInput.includes('youtube.com') || playlistInput.includes('youtu.be')) {
       // Use the playlist-url endpoint for full URLs
       const params = new URLSearchParams();
       params.append('url', playlistInput);
-      const response = await apiClient.get(`/playlist-url?${params.toString()}`);
-      console.log("API Response - getPlaylistInfo:", response); // 🔥 Debugging
-      return response.data;
+      response = await apiClient.get(`/playlist-url?${params.toString()}`);
     } else {
       // Use the direct playlist ID endpoint
-      const response = await apiClient.get(`/playlist/${playlistInput}`);
-      return response.data;
+      response = await apiClient.get(`/playlist/${playlistInput}`);
     }
+    
+    // Return the response data directly - we'll handle structure in the component
+    return response.data;
   } catch (error) {
     console.error('Error fetching playlist info:', error);
     throw error;
@@ -51,9 +53,20 @@ export const getPlaylistVideos = async (playlistInput: string, pageToken?: strin
     params.append('max_results', maxResults.toString());
 
     const response = await apiClient.get(`/playlist/${playlistId}/videos?${params.toString()}`);
+    
+    // Check headers for the next page token
+    const nextPageToken = response.headers['x-next-page-token'] || null;
+    
+    // Log the response to help diagnose any issues
+    console.log('API videos response:', {
+      data: response.data,
+      headers: response.headers,
+      nextPageToken
+    });
+    
     return {
       videos: response.data,
-      nextPageToken: response.headers['x-next-page-token'] || null
+      nextPageToken: nextPageToken
     };
   } catch (error) {
     console.error('Error fetching playlist videos:', error);
