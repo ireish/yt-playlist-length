@@ -48,7 +48,7 @@ Before you begin, ensure you have the following installed:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/yt-playlist-length.git
+   git clone https://github.com/ireish/yt-playlist-length.git
    cd yt-playlist-length
    ```
 
