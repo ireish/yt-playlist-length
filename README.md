@@ -9,7 +9,7 @@
 
 A modern web application that calculates the total length of a YouTube playlist, allowing users to adjust playback speed to see how long it would take to watch the entire playlist.
 
-![YouTube Playlist Length Calculator](https://via.placeholder.com/800x400?text=YouTube+Playlist+Length+Calculator)
+![YouTube Playlist Length Calculator]
 
 ## 🌟 Features
 
