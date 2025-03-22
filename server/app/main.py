@@ -2,7 +2,7 @@ from .utils.helpers import extract_playlist_id
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from .services.youtube import YouTubeService
-from .models.playlist import PlaylistResponse, PlaylistVideosRequest, VideoItem
+from .models.playlist import PlaylistResponse, VideoItem
 from typing import Optional, List
 import logging
 
@@ -16,7 +16,7 @@ app = FastAPI(title="YouTube Playlist API",
 # Configure CORS to allow requests from the frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # React frontend URL
+    allow_origins=["*"],  # Allow all origins
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -41,6 +41,7 @@ async def get_playlist_info(playlist_id: str):
         logger.error(f"Error getting playlist info: {str(e)}")
         raise HTTPException(status_code=404, detail=f"Playlist not found: {str(e)}")
 
+
 @app.get("/api/playlist/{playlist_id}/videos", response_model=List[VideoItem])
 async def get_playlist_videos(
     playlist_id: str, 
@@ -63,6 +64,7 @@ async def get_playlist_videos(
     except Exception as e:
         logger.error(f"Error getting playlist videos: {str(e)}")
         raise HTTPException(status_code=404, detail=f"Could not fetch playlist videos: {str(e)}")
+
 
 @app.get("/api/playlist/{playlist_id}/duration")
 async def get_playlist_duration(playlist_id: str):

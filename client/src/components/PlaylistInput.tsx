@@ -1,5 +1,6 @@
+// Main container when no playlist is loaded
+
 import React, { useState } from 'react';
-// import { extractPlaylistId } from '../utils/youtubeUtils';
 
 interface PlaylistInputProps {
     onSubmit: (playlistUrl: string) => void;
