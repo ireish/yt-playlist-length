@@ -9,7 +9,8 @@ const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-});
+}); 
+
 
 // API functions
 export const getPlaylistInfo = async (playlistInput: string) => {

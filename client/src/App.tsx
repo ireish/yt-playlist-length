@@ -32,7 +32,10 @@ const App: React.FC = () => {
     toggleDarkMode: () => setDarkMode(prev => !prev)
   };
   
-  // Effect to load initial playlist data
+
+  // Effect triggered when 'Load Playlist' button is clicked
+  // because `PlaylistInput` component calls `onSubmit` prop
+  // which sets the `playlistId` state
   useEffect(() => {
     const loadPlaylistData = async () => {
       if (!playlistId) return;
