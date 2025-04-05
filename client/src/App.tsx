@@ -48,10 +48,14 @@ const App: React.FC = () => {
       try {
         // Fetch playlist information
         const playlist = await getPlaylistInfo(playlistId);
-        setPlaylistInfo(playlist.playlist);
+        console.log('DEBUG: Playlist info response:', playlist); 
+        setPlaylistInfo(playlist || playlist.playlist);
         
         // Fetch first page of videos
         const { videos: firstPageVideos, nextPageToken: token } = await getPlaylistVideos(playlistId);
+
+        console.log('DEBUG: Videos response:', firstPageVideos, token);
+
         setVideos(firstPageVideos);
         setNextPageToken(token);
       } catch (err) {
@@ -96,7 +100,7 @@ const App: React.FC = () => {
   const handlePlaybackSpeedChange = (speed: number) => {
     setPlaybackSpeed(speed);
   };
-  
+
   return (
     <div style={{
       backgroundColor: darkMode ? '#121212' : '#F8F8F8',
