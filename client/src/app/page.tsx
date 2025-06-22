@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import Header from './components/Header';
-import PlaylistInput from './components/PlaylistInput';
-import PlaylistViewer from './components/PlaylistViewer';
-import { PlaylistInfo, VideoItem, ThemeContextType } from './utils/types';
-import { getPlaylistInfo, getPlaylistVideos } from './utils/api';
-import './styles/globalStyles.css';
+"use client";
 
-const App: React.FC = () => {
+import React, { useState, useEffect } from 'react';
+import Header from '../components/Header';
+import PlaylistInput from '../components/PlaylistInput';
+import PlaylistViewer from '../components/PlaylistViewer';
+import { PlaylistInfo, VideoItem, ThemeContextType } from '../utils/types';
+import { getPlaylistInfo, getPlaylistVideos } from '../utils/api';
+
+const HomePage: React.FC = () => {
   // Theme state
-  const [darkMode, setDarkMode] = useState<boolean>(() => {
-    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  });
+  const [darkMode, setDarkMode] = useState<boolean>(false);
+
+  useEffect(() => {
+    setDarkMode(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  }, []);
   
   // Playlist state
   const [playlistId, setPlaylistId] = useState<string | null>(null);
@@ -32,7 +35,6 @@ const App: React.FC = () => {
     toggleDarkMode: () => setDarkMode(prev => !prev)
   };
   
-
   // Effect triggered when 'Load Playlist' button is clicked
   // because `PlaylistInput` component calls `onSubmit` prop
   // which sets the `playlistId` state
@@ -152,4 +154,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default HomePage; 
