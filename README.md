@@ -1,10 +1,8 @@
 # YouTube Playlist Length Calculator
 
+[![Next.js](https://img.shields.io/badge/Next.js-14.x-black)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-18.x-blue)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-4.x-646CFF)](https://vitejs.dev/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.104.x-009688)](https://fastapi.tiangolo.com/)
-[![Python](https://img.shields.io/badge/Python-3.10+-yellow)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
 A modern web application that calculates the total length of a YouTube playlist, allowing users to adjust playback speed to see how long it would take to watch the entire playlist.
@@ -22,26 +20,23 @@ A modern web application that calculates the total length of a YouTube playlist,
 
 ## 🛠️ Tech Stack
 
+- **Next.js**: React framework for building full-stack web applications.
 - **React**: UI library
 - **TypeScript**: Type safety
-- **Vite**: Build tool and development server
-- **Axios**: HTTP client for API requests
-- **YouTube Data API v3**: For fetching playlist metadata
+- **Google APIs Node.js Client**: For fetching playlist metadata from YouTube Data API v3.
 
 ## 📋 Prerequisites
 
 Before you begin, ensure you have the following installed:
-- Node.js (v16+)
-- npm or yarn
+- Node.js (v18.17+)
+- npm, yarn, or pnpm
 - A Google API key with YouTube Data API v3 enabled
 
 ## 🚀 Installation
 
-### Frontend Setup
-
-1. Navigate to the client directory:
+1. Navigate to the `client` directory:
    ```bash
-   cd ../client
+   cd client
    ```
 
 2. Install dependencies:
@@ -51,37 +46,25 @@ Before you begin, ensure you have the following installed:
    yarn install
    ```
    
-3. Create a `.env` file in the `client` directory with your YouTube API key:
+3. Create a `.env.local` file in the `client` directory with your YouTube API key:
    ```
    YOUTUBE_API_KEY=your_youtube_api_key_here
    ```
 
 ## 🏃‍♂️ Running the Application
 
-### Start the Backend Server
-
-```bash
-cd server
-# Make sure your virtual environment is activated
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-```
-
-The API will be available at http://localhost:8000
-
-### Start the Frontend Development Server
-
-```bash
-cd client
-npm run dev
-# or
-yarn dev
-```
-
-The application will be available at http://localhost:5173
+1.  Navigate to the `client` directory if you are not already there.
+2.  Start the development server:
+    ```bash
+    npm run dev
+    # or
+    yarn dev
+    ```
+3. The application will be available at http://localhost:3000
 
 ## 📱 Usage
 
-1. Open your browser and navigate to http://localhost:5173
+1. Open your browser and navigate to http://localhost:3000
 2. Enter a YouTube playlist URL (e.g., https://www.youtube.com/playlist?list=PLAYLIST_ID)
 3. Click "Load Playlist" to fetch the playlist information
 4. View the total duration and adjust the playback speed using the slider
@@ -90,29 +73,28 @@ The application will be available at http://localhost:5173
 
 ## 🔌 API Endpoints
 
-The backend provides the following endpoints:
+The application provides the following API endpoints, which are handled by Next.js API Routes:
 
-- `GET /api/playlist/{playlist_id}` - Get basic playlist information
-- `GET /api/playlist/{playlist_id}/videos` - Get videos from the playlist with pagination
-- `GET /api/playlist/{playlist_id}/duration` - Get the total duration of the playlist
-- `GET /api/playlist-url?url={playlist_url}` - Process a full YouTube URL
-
+- `GET /api/playlist/{playlistId}` - Get basic playlist information.
+- `GET /api/playlist/{playlistId}/videos` - Get videos from the playlist with pagination. Supports `pageToken` and `maxResults` query parameters.
 
 ## 🧰 Project Structure
 
 ```
 yt-playlist-length/
-├── client/                   # React frontend (Vite + TypeScript)
-│   ├── public/
-│   ├── src/
-│   │   ├── components/       # React components
-│   │   ├── utils/            # Utility functions and types
-│   │   ├── styles/           # CSS and theme files
-│   │   ├── App.tsx           # Main application component
-│   │   └── main.tsx          # Entry point
-│   ├── package.json
-│   └── vite.config.ts
-└── README.md
+└── client/                   # Next.js application
+    ├── src/
+    │   ├── app/              # App Router: pages and layouts
+    │   │   ├── api/          # API routes
+    │   │   ├── layout.tsx    # Root layout
+    │   │   └── page.tsx      # Main page
+    │   ├── components/       # React components
+    │   ├── utils/            # Utility functions and types
+    │   └── styles/           # Global styles
+    ├── public/
+    ├── package.json
+    ├── next.config.mjs
+    └── tsconfig.json
 ```
 
 ## 📝 License
@@ -129,9 +111,8 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-<!-- ## 🙏 Acknowledgements
+## 🙏 Acknowledgements
 
 - [YouTube Data API](https://developers.google.com/youtube/v3)
-- [FastAPI](https://fastapi.tiangolo.com/)
+- [Next.js](https://nextjs.org/)
 - [React](https://reactjs.org/)
-- [Vite](https://vitejs.dev/) -->
