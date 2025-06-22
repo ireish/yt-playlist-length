@@ -22,57 +22,20 @@ A modern web application that calculates the total length of a YouTube playlist,
 
 ## 🛠️ Tech Stack
 
-### Frontend
 - **React**: UI library
 - **TypeScript**: Type safety
 - **Vite**: Build tool and development server
 - **Axios**: HTTP client for API requests
-
-### Backend
-- **FastAPI**: High-performance Python web framework
-- **Python 3.10+**: Server-side language
 - **YouTube Data API v3**: For fetching playlist metadata
-- **Uvicorn**: ASGI server
 
 ## 📋 Prerequisites
 
 Before you begin, ensure you have the following installed:
 - Node.js (v16+)
 - npm or yarn
-- Python 3.10+
 - A Google API key with YouTube Data API v3 enabled
 
 ## 🚀 Installation
-
-### Backend Setup
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/ireish/yt-playlist-length.git
-   cd yt-playlist-length
-   ```
-
-2. Create and activate a virtual environment:
-   ```bash
-   cd server
-   python -m venv venv
-
-   # On Windows
-   venv\Scripts\activate
-
-   # On macOS/Linux
-   source venv/bin/activate
-   ```
-
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. Create a `.env` file in the `server` directory with your YouTube API key:
-   ```
-   YOUTUBE_API_KEY=your_youtube_api_key_here
-   ```
 
 ### Frontend Setup
 
@@ -86,6 +49,11 @@ Before you begin, ensure you have the following installed:
    npm install
    # or
    yarn install
+   ```
+   
+3. Create a `.env` file in the `client` directory with your YouTube API key:
+   ```
+   YOUTUBE_API_KEY=your_youtube_api_key_here
    ```
 
 ## 🏃‍♂️ Running the Application
@@ -129,7 +97,6 @@ The backend provides the following endpoints:
 - `GET /api/playlist/{playlist_id}/duration` - Get the total duration of the playlist
 - `GET /api/playlist-url?url={playlist_url}` - Process a full YouTube URL
 
-For detailed API documentation, visit http://localhost:8000/docs when the backend is running.
 
 ## 🧰 Project Structure
 
@@ -145,17 +112,6 @@ yt-playlist-length/
 │   │   └── main.tsx          # Entry point
 │   ├── package.json
 │   └── vite.config.ts
-├── server/                   # Python FastAPI backend
-│   ├── app/
-│   │   ├── __init__.py
-│   │   ├── main.py           # FastAPI application
-│   │   ├── config.py         # Configuration settings
-│   │   ├── api/
-│   │   ├── services/         # Service layer for YouTube API
-│   │   ├── models/           # Data models
-│   │   └── utils/            # Utility functions
-│   ├── requirements.txt      # Python dependencies
-│   └── .env                  # Environment variables (create this)
 └── README.md
 ```
 
