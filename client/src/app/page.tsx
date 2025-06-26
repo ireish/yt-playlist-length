@@ -44,6 +44,7 @@ const HomePage: React.FC = () => {
       
       setIsLoading(true);
       setError(null);
+      setPlaylistInfo(null);
       setVideos([]);
       setNextPageToken(null);
       
