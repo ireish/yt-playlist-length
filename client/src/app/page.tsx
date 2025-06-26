@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import PlaylistInput from '../components/PlaylistInput';
 import PlaylistViewer from '../components/PlaylistViewer';
 import { PlaylistInfo, VideoItem, ThemeContextType } from '../utils/types';
-import { getPlaylistInfo, getPlaylistVideos } from '../utils/api';
+import { getPlaylistData } from '../utils/api';
 
 const HomePage: React.FC = () => {
   // Theme state
@@ -48,21 +48,13 @@ const HomePage: React.FC = () => {
       setNextPageToken(null);
       
       try {
-        // Fetch playlist information
-        const playlist = await getPlaylistInfo(playlistId);
-        console.log('DEBUG: Playlist info response:', playlist); 
-        setPlaylistInfo(playlist || playlist.playlist);
-        
-        // Fetch first page of videos
-        const { videos: firstPageVideos, nextPageToken: token } = await getPlaylistVideos(playlistId);
-
-        console.log('DEBUG: Videos response:', firstPageVideos, token);
-
-        setVideos(firstPageVideos);
-        setNextPageToken(token);
-      } catch (err) {
+        const { playlist, videos, nextPageToken } = await getPlaylistData(playlistId);
+        setPlaylistInfo(playlist);
+        setVideos(videos);
+        setNextPageToken(nextPageToken);
+      } catch (err: any) {
         console.error('Error loading playlist:', err);
-        setError('Failed to load playlist. Please check the URL and try again.');
+        setError(err.message || 'Failed to load playlist. Please check the URL and try again.');
       } finally {
         setIsLoading(false);
       }
@@ -78,16 +70,16 @@ const HomePage: React.FC = () => {
     setIsLoadingMore(true);
     
     try {
-      const { videos: moreVideos, nextPageToken: token } = await getPlaylistVideos(
+      const { videos: moreVideos, nextPageToken: token } = await getPlaylistData(
         playlistId, 
         nextPageToken
       );
       
       setVideos(prevVideos => [...prevVideos, ...moreVideos]);
       setNextPageToken(token);
-    } catch (err) {
+    } catch (err: any) {
       console.error('Error loading more videos:', err);
-      setError('Failed to load more videos. Please try again.');
+      setError(err.message || 'Failed to load more videos. Please try again.');
     } finally {
       setIsLoadingMore(false);
     }
@@ -136,9 +128,9 @@ const HomePage: React.FC = () => {
           </div>
         )}
         
-        {playlistInfo && (
+        {(isLoading || playlistInfo) && (
           <PlaylistViewer 
-            playlistInfo={playlistInfo}
+            playlistInfo={playlistInfo!}
             videos={videos}
             darkMode={darkMode}
             isLoading={isLoading}

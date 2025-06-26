@@ -29,17 +29,29 @@ const PlaylistViewer: React.FC<PlaylistViewerProps> = ({
   if (isLoading) {
     return (
       <div style={{
-        maxWidth: '1200px',
-        margin: '24px auto',
-        padding: '24px',
-        backgroundColor: darkMode ? '#2D2D2D' : '#F8F8F8',
-        borderRadius: '8px',
-        boxShadow: darkMode ? '0 4px 12px rgba(0, 0, 0, 0.5)' : '0 4px 12px rgba(0, 0, 0, 0.1)',
-        textAlign: 'center'
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '200px',
       }}>
-        <p style={{ color: darkMode ? '#FFFFFF' : '#333333' }}>
-          Loading playlist data...
-        </p>
+        <style>
+          {`
+            .loader {
+              border: 8px solid ${darkMode ? '#444' : '#f3f3f3'};
+              border-top: 8px solid ${darkMode ? '#BB86FC' : '#6200EA'};
+              border-radius: 50%;
+              width: 60px;
+              height: 60px;
+              animation: spin 1s linear infinite;
+            }
+
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          `}
+        </style>
+        <div className="loader"></div>
       </div>
     );
   }
@@ -81,7 +93,7 @@ const PlaylistViewer: React.FC<PlaylistViewerProps> = ({
           color: darkMode ? '#BBBBBB' : '#666666',
           marginBottom: '16px'
         }}>
-          {playlistInfo.item_count} videos • Total Duration: {totalDurationFormatted}
+          Total Videos: {playlistInfo.item_count} | Total Duration: {totalDurationFormatted}
         </p>
         <p style={{ 
           fontSize: '14px',
