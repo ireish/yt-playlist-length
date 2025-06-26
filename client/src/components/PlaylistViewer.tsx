@@ -29,7 +29,7 @@ const PlaylistViewer: React.FC<PlaylistViewerProps> = ({
   if (isLoading) {
     return (
       <div style={{
-        maxWidth: '800px',
+        maxWidth: '1200px',
         margin: '24px auto',
         padding: '24px',
         backgroundColor: darkMode ? '#2D2D2D' : '#F8F8F8',
@@ -54,7 +54,7 @@ const PlaylistViewer: React.FC<PlaylistViewerProps> = ({
   
   return (
     <div style={{
-      maxWidth: '800px',
+      maxWidth: '1200px',
       margin: '24px auto',
       padding: '24px',
       backgroundColor: darkMode ? '#2D2D2D' : '#F8F8F8',
