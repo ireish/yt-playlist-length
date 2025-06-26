@@ -28,7 +28,7 @@ const handleSubmit = (e: React.FormEvent) => {
   
   return (
     <div style={{
-      maxWidth: '800px',
+      maxWidth: '1200px',
       margin: '0 auto',
       padding: '24px',
       backgroundColor: darkMode ? '#2D2D2D' : '#F8F8F8',
