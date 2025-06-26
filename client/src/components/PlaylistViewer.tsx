@@ -75,33 +75,47 @@ const PlaylistViewer: React.FC<PlaylistViewerProps> = ({
     }}>
       <div style={{ marginBottom: '24px' }}>
         <h2 style={{ 
-          fontSize: '24px',
+          fontSize: '22px',
           color: darkMode ? '#FFFFFF' : '#333333',
-          marginBottom: '8px'
+          marginBottom: '12px'
         }}>
           {playlistInfo.title}
         </h2>
         <p style={{ 
           fontSize: '14px',
           color: darkMode ? '#BBBBBB' : '#666666',
-          marginBottom: '8px'
+          marginBottom: '12px'
         }}>
-          Channel: {playlistInfo.channel_title}
+          <strong>Channel:</strong> {playlistInfo.channel_title}
         </p>
         <p style={{ 
           fontSize: '14px',
           color: darkMode ? '#BBBBBB' : '#666666',
           marginBottom: '16px'
         }}>
-          Total Videos: {playlistInfo.item_count} | Total Duration: {totalDurationFormatted}
+          {playlistInfo.item_count} videos • <strong>Total Duration:</strong> {totalDurationFormatted}
         </p>
-        <p style={{ 
-          fontSize: '14px',
-          color: darkMode ? '#CCCCCC' : '#555555',
-          marginBottom: '24px'
-        }}>
-          {playlistInfo.description}
-        </p>
+        
+        {playlistInfo.description && (
+          <>
+            <h4 style={{
+                fontSize: '16px',
+                color: darkMode ? '#FFFFFF' : '#333333',
+                marginBottom: '8px'
+            }}>
+                Description
+            </h4>
+            <p style={{ 
+              fontSize: '14px',
+              color: darkMode ? '#CCCCCC' : '#555555',
+              marginBottom: '24px',
+              whiteSpace: 'pre-wrap',
+              lineHeight: '1.6'
+            }}>
+              {playlistInfo.description}
+            </p>
+          </>
+        )}
         
         {/* Duration information with speed slider */}
         <div style={{
@@ -110,59 +124,32 @@ const PlaylistViewer: React.FC<PlaylistViewerProps> = ({
           borderRadius: '8px',
           marginBottom: '24px'
         }}>
-          <h3 style={{ 
-            fontSize: '18px',
-            color: darkMode ? '#FFFFFF' : '#333333',
-            marginBottom: '16px'
-          }}>
-            Playlist Duration
-          </h3>
-          
           <div style={{
             display: 'flex',
-            flexDirection: 'column',
-            gap: '16px'
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '16px'
           }}>
-            <div>
-              <p style={{ 
-                fontSize: '14px',
-                color: darkMode ? '#BBBBBB' : '#666666',
-                marginBottom: '4px'
-              }}>
-                Normal Speed (1.00x):
-              </p>
-              <p style={{ 
-                fontSize: '24px',
-                fontWeight: 'bold',
-                color: darkMode ? '#FFFFFF' : '#333333'
-              }}>
-                {totalDurationFormatted}
-              </p>
-            </div>
-            
-            <SpeedSlider 
-              speed={playbackSpeed} 
-              onChange={onPlaybackSpeedChange} 
-              darkMode={darkMode} 
-            />
-            
-            <div>
-              <p style={{ 
-                fontSize: '14px',
-                color: darkMode ? '#BBBBBB' : '#666666',
-                marginBottom: '4px'
-              }}>
-                Adjusted Duration ({playbackSpeed.toFixed(2)}x):
-              </p>
-              <p style={{ 
-                fontSize: '24px',
-                fontWeight: 'bold',
-                color: darkMode ? '#BB86FC' : '#6200EA'
-              }}>
-                {adjustedDurationFormatted}
-              </p>
-            </div>
+            <h3 style={{ 
+              fontSize: '18px',
+              color: darkMode ? '#FFFFFF' : '#333333',
+            }}>
+              Playlist Duration
+            </h3>
+            <p style={{ 
+              fontSize: '24px',
+              fontWeight: 'bold',
+              color: darkMode ? '#BB86FC' : '#6200EA'
+            }}>
+              {adjustedDurationFormatted}
+            </p>
           </div>
+          
+          <SpeedSlider 
+            speed={playbackSpeed} 
+            onChange={onPlaybackSpeedChange} 
+            darkMode={darkMode} 
+          />
         </div>
       </div>
       

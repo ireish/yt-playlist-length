@@ -42,20 +42,46 @@ const SpeedSlider: React.FC<SpeedSliderProps> = ({ speed, onChange, darkMode }) 
           step="0.05"
           value={speed}
           onChange={handleChange}
-          style={{
-            flex: 1,
-            accentColor: darkMode ? '#BB86FC' : '#6200EA'
-          }}
+          className="speed-slider"
         />
-        <span style={{ 
-          fontSize: '14px',
-          color: darkMode ? '#FFFFFF' : '#333333',
-          fontWeight: 'bold',
-          minWidth: '60px',
-          textAlign: 'center'
-        }}>
-          {speed.toFixed(2)}x
-        </span>
+        <style>
+          {`
+            .speed-slider {
+              flex: 1;
+              -webkit-appearance: none;
+              width: 100%;
+              height: 8px;
+              border-radius: 4px;
+              background: ${darkMode ? '#444' : '#ddd'};
+              outline: none;
+              opacity: 0.9;
+              transition: opacity .2s;
+            }
+
+            .speed-slider:hover {
+              opacity: 1;
+            }
+
+            .speed-slider::-webkit-slider-thumb {
+              -webkit-appearance: none;
+              appearance: none;
+              width: 24px;
+              height: 16px;
+              border-radius: 4px;
+              background: ${darkMode ? '#BB86FC' : '#6200EA'};
+              cursor: pointer;
+            }
+
+            .speed-slider::-moz-range-thumb {
+              width: 24px;
+              height: 16px;
+              border-radius: 4px;
+              background: ${darkMode ? '#BB86FC' : '#6200EA'};
+              cursor: pointer;
+              border: none;
+            }
+          `}
+        </style>
       </div>
     </div>
   );
