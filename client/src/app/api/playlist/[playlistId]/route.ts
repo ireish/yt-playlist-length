@@ -10,6 +10,47 @@ const parseDuration = (duration: string): number => {
   return hours * 3600 + minutes * 60 + seconds;
 };
 
+const getFullPlaylistDuration = async (playlistId: string): Promise<number> => {
+    let totalDurationSeconds = 0;
+    let nextPageToken: string | undefined | null = undefined;
+
+    try {
+        do {
+            const playlistItemsResponse: any = await youtube.playlistItems.list({
+                part: ['contentDetails'],
+                playlistId: playlistId,
+                maxResults: 50,
+                pageToken: nextPageToken || undefined,
+            });
+
+            const videoIds = playlistItemsResponse.data.items
+                ?.map((item: any) => item.contentDetails?.videoId)
+                .filter((id: string | null): id is string => !!id);
+
+            if (videoIds && videoIds.length > 0) {
+                const videosResponse = await youtube.videos.list({
+                    part: ['contentDetails'],
+                    id: videoIds,
+                });
+
+                const durationSeconds = videosResponse.data.items?.reduce((acc: any, video: any) => {
+                    return acc + parseDuration(video.contentDetails?.duration || '');
+                }, 0) || 0;
+                totalDurationSeconds += durationSeconds;
+            }
+
+            nextPageToken = playlistItemsResponse.data.nextPageToken;
+        } while (nextPageToken);
+
+    } catch (error) {
+        console.error('Error calculating full playlist duration:', error);
+        // Return 0 or handle error as appropriate
+        return 0;
+    }
+
+    return totalDurationSeconds;
+};
+
 export async function GET(
   request: NextRequest,
   { params }: { params: { playlistId: string } }
@@ -47,12 +88,13 @@ export async function GET(
       thumbnail_url: playlistData.snippet?.thumbnails?.medium?.url,
       published_at: playlistData.snippet?.publishedAt,
       item_count: playlistData.contentDetails?.itemCount,
+      estimated_duration_seconds: await getFullPlaylistDuration(playlistId),
     };
 
     const playlistItemsResponse = await youtube.playlistItems.list({
       part: ['contentDetails', 'snippet'],
       playlistId: playlistId,
-      maxResults: 50,
+      maxResults: 10,
       pageToken: pageToken,
     });
 

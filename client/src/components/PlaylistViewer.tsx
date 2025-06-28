@@ -59,7 +59,7 @@ const PlaylistViewer: React.FC<PlaylistViewerProps> = ({
   }
   
   // Calculate the total duration
-  const totalDurationSeconds = videos.reduce((total, video) => total + video.duration_seconds, 0);
+  const totalDurationSeconds = playlistInfo.estimated_duration_seconds || videos.reduce((total, video) => total + video.duration_seconds, 0);
   const adjustedDurationSeconds = calculateAdjustedDuration(totalDurationSeconds, playbackSpeed);
   
   // Format durations for display
