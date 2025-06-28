@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PlaylistInfo, VideoItem } from '../utils/types';
 import { calculateAdjustedDuration, formatDuration } from '../utils/youtubeUtils';
 import SpeedSlider from './SpeedSlider';
@@ -26,6 +26,8 @@ const PlaylistViewer: React.FC<PlaylistViewerProps> = ({
   onLoadMore,
   isLoadingMore
 }) => {
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+
   if (isLoading) {
     return (
       <div style={{
@@ -105,15 +107,53 @@ const PlaylistViewer: React.FC<PlaylistViewerProps> = ({
             }}>
                 Description
             </h4>
-            <p style={{ 
+            <p style={{
               fontSize: '14px',
               color: darkMode ? '#CCCCCC' : '#555555',
               marginBottom: '24px',
               whiteSpace: 'pre-wrap',
               lineHeight: '1.6'
             }}>
-              {playlistInfo.description}
+              {isDescriptionExpanded || playlistInfo.description.length <= 400
+                ? playlistInfo.description
+                : `${playlistInfo.description.substring(0, 400)}... `}
+
+              {!isDescriptionExpanded && playlistInfo.description.length > 400 && (
+                <button
+                  onClick={() => setIsDescriptionExpanded(true)}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: darkMode ? '#BB86FC' : '#6200EA',
+                    cursor: 'pointer',
+                    padding: '0',
+                    fontWeight: 'bold',
+                    display: 'inline',
+                    marginLeft: '4px',
+                  }}
+                >
+                  Show more
+                </button>
+              )}
             </p>
+
+            {isDescriptionExpanded && playlistInfo.description.length > 400 && (
+                <button
+                    onClick={() => setIsDescriptionExpanded(false)}
+                    style={{
+                        background: 'none',
+                        border: 'none',
+                        color: darkMode ? '#BB86FC' : '#6200EA',
+                        cursor: 'pointer',
+                        padding: '0',
+                        marginTop: '-16px',
+                        marginBottom: '24px',
+                        fontWeight: 'bold',
+                    }}
+                >
+                    Show less
+                </button>
+            )}
           </>
         )}
         
