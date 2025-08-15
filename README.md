@@ -1,7 +1,6 @@
 # YouTube Playlist Length Calculator
 
 [![Next.js](https://img.shields.io/badge/Next.js-14.x-black)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-18.x-blue)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
@@ -14,14 +13,12 @@ A modern web application that calculates the total length of a YouTube playlist,
 - Enter any YouTube playlist URL and get detailed information about the playlist
 - View total duration of the playlist at normal speed (1x)
 - Adjust playback speed (1.00x to 2.00x) and see updated duration
-- Browse all videos in the playlist with pagination
 - Dark mode theme for comfortable viewing
 - Responsive design that works on desktop and mobile devices
 
 ## 🛠️ Tech Stack
 
 - **Next.js**: React framework for building full-stack web applications.
-- **React**: UI library
 - **TypeScript**: Type safety
 - **Google APIs Node.js Client**: For fetching playlist metadata from YouTube Data API v3.
 
@@ -46,21 +43,27 @@ Before you begin, ensure you have the following installed:
    yarn install
    ```
    
-3. Create a `.env.local` file in the `client` directory with your YouTube API key:
+3. Rename the `.env.example` file in the `client` directory to `.env` and paste your YouTube API key:
    ```
-   YOUTUBE_API_KEY=your_youtube_api_key_here
+   YOUTUBE_API_KEY=your_youtube_data_api_v3_key_here
    ```
 
 ## 🏃‍♂️ Running the Application
 
 1.  Navigate to the `client` directory if you are not already there.
-2.  Start the development server:
+2.  Install dependencies:
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
+3.  Start the development server:
     ```bash
     npm run dev
     # or
     yarn dev
     ```
-3. The application will be available at http://localhost:3000
+4.  The application will be available at http://localhost:3000
 
 ## 📱 Usage
 
@@ -68,8 +71,6 @@ Before you begin, ensure you have the following installed:
 2. Enter a YouTube playlist URL (e.g., https://www.youtube.com/playlist?list=PLAYLIST_ID)
 3. Click "Load Playlist" to fetch the playlist information
 4. View the total duration and adjust the playback speed using the slider
-5. Browse through the videos in the playlist
-6. Click "Load More" to see additional videos if the playlist has more than 20 videos
 
 ## 🔌 API Endpoints
 
